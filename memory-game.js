@@ -42,24 +42,39 @@ function createCards(colors) {
   const gameBoard = document.getElementById("game");
 
   for (let color of colors) {
-    // missing code here ...
+    // create div DOM element and append to DOM
+      // div has value of color
+      // div has listener to handle click event
+    let card = document.createElement("div");
+    gameBoard.appendChild(card);
+    card.style.backgroundColor = [color];
+    card.addEventListener("click", handleCardClick);
   }
 }
 
 /** Flip a card face-up. */
 
 function flipCard(card) {
-  // ... you need to write this ...
+  // if first card flipped, wait until second card flipped
+  // if second card flipped, compare to first card
+    // if match, keep both face up
+    // if not match, flip face down
 }
 
 /** Flip a card face-down. */
 
 function unFlipCard(card) {
-  // ... you need to write this ...
+  // flip face down after 1 second if two clicked cards do not match
 }
 
 /** Handle clicking on a card: this could be first-card or second-card. */
 
 function handleCardClick(evt) {
-  // ... you need to write this ...
+  console.log("I'm clicked!");
+  flipCard(evt);
+  // if no cards face up, flipCard executed
+  // if one card face up, flipCard executed and cards compared
+  // if two cards face up and match, handleCardClick will flip next
+  // if two cards face up and DO NOT match, handleCardClick will unFlipCard on both face up and restart with first-card
+  // CANNOT CLICK SAME CARD TWICE
 }
