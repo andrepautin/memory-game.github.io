@@ -46,35 +46,101 @@ function createCards(colors) {
       // div has value of color
       // div has listener to handle click event
     let card = document.createElement("div");
+    card.classList.add("main-card");
+    card.setAttribute("data-color", [color]);
+    
+    let front = document.createElement("div")
+    front.classList.add("front-card");
+    front.style.backgroundColor = [color];
+    
+    let back = document.createElement("div");
+    back.classList.add("back-card");
+    back.style.backgroundColor = "white";
+    
     gameBoard.appendChild(card);
-    card.style.backgroundColor = [color];
-    card.addEventListener("click", handleCardClick);
+    card.appendChild(front);
+    card.appendChild(back);
+    card.addEventListener("click", flipCard);
   }
 }
 
+
 /** Flip a card face-up. */
 
-function flipCard(card) {
+let flipped = false;
+let gameLocked = false;
+let first, second;
+let cards = [];
+
+function flipCard() {
   // if first card flipped, wait until second card flipped
   // if second card flipped, compare to first card
     // if match, keep both face up
     // if not match, flip face down
+  if (gameLocked) {
+    return; 
+  }
+  if (this === first) {
+    return;
+  }
+  this.classList.add("flip");
+
+  if (!flipped) {
+    flipped = true;
+    first = this;
+    return;
+  }
+  second = this;
+
+  checkMatched();
+}
+
+function checkMatched() {
+  if (first.dataset.color === second.dataset.color) {
+    handleCardClick();
+    return;
+  }
+  unFlipCard();
 }
 
 /** Flip a card face-down. */
 
 function unFlipCard(card) {
   // flip face down after 1 second if two clicked cards do not match
+  gameLocked = true;
+  setTimeout(() => {
+    first.classList.remove("flip");
+    second.classList.remove("flip");
+    resetCards();
+  }, 1000);
 }
 
 /** Handle clicking on a card: this could be first-card or second-card. */
 
-function handleCardClick(evt) {
-  console.log("I'm clicked!");
-  flipCard(evt);
-  // if no cards face up, flipCard executed
-  // if one card face up, flipCard executed and cards compared
-  // if two cards face up and match, handleCardClick will flip next
-  // if two cards face up and DO NOT match, handleCardClick will unFlipCard on both face up and restart with first-card
-  // CANNOT CLICK SAME CARD TWICE
+let completeMatches = 0;
+
+function handleCardClick() {
+  cards.push(first);
+  cards.push(second);
+  first.removeEventListener("click", flipCard);
+  second.removeEventListener("click", flipCard);
+  completeMatches += 2;
+  if (completeMatches === 10) {
+    setTimeout(() => {
+      gameOver();
+    }, 500);
+  }
+  resetCards();
+}
+
+function resetCards() {
+  flipped = false;
+  gameLocked = false;
+  first = null;
+  second = null;
+}
+
+function gameOver() {
+  alert("You win!");
+  location.reload();
 }
