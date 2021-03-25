@@ -48,10 +48,6 @@ h1 {
   backface-visibility: hidden;
 }
 
-#restart {
-  text-align: center;
-}
-
 .play-again {
   background-color: yellowgreen;
   height: 50px;
