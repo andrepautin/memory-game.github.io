@@ -55,7 +55,7 @@ function createCards(colors) {
     
     let back = document.createElement("div");
     back.classList.add("back-card");
-    back.style.backgroundColor = "white";
+    back.style.backgroundColor = "gray";
     
     gameBoard.appendChild(card);
     card.appendChild(front);

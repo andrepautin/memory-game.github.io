@@ -1,7 +1,12 @@
 /* you can add to or change this. */
+html {
+  background-color: black;
+}
 
 h1 {
   text-align: center;
+  font-family: fantasy;
+  color: white;
 }
 
 #game {
@@ -48,9 +53,4 @@ h1 {
   backface-visibility: hidden;
 }
 
-.play-again {
-  background-color: yellowgreen;
-  height: 50px;
-  width: 100px;
-}
 
